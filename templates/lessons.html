@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العرّاب - الدروس المتاحة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Cairo', sans-serif; }</style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#000000',
+                            navy: '#14213D',
+                            teal: '#14213D',
+                            lightTeal: '#E5E5E5',
+                            accent: '#FCA311'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-dark text-gray-100 min-h-screen pb-20">
+
+    <header class="bg-brand-navy border-b border-gray-800 sticky top-0 z-50 px-4 py-3 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <a href="/" class="bg-brand-accent text-black p-2 rounded-xl font-extrabold text-lg shadow-md shadow-brand-accent/20">ع</a>
+            <div>
+                <h1 class="text-sm font-extrabold text-white">{{ branch.branch_name }}</h1>
+                <p class="text-[10px] text-brand-accent">{{ grade.grade_name }} • {{ tab.tab_name }}</p>
+            </div>
+        </div>
+        <a href="/grade/{{ grade.grade_id }}/tab/{{ tab.tab_id }}" class="text-xs text-brand-accent hover:text-white transition-colors">تغيير الفرع</a>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 mt-6">
+        <h2 class="text-xs font-bold text-gray-400 mb-4 flex items-center gap-2">
+            <span>📅 توزيع دروس المنهج الرسمي بالترتيب الزمني</span>
+        </h2>
+        
+        <div class="space-y-3">
+            {% if lessons %}
+                {% for l in lessons %}
+                <div class="bg-brand-navy border border-gray-800/80 rounded-2xl p-4 shadow-md flex justify-between items-center relative overflow-hidden group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm {% if l.progress_status == 'completed' %}bg-emerald-500/20 text-emerald-400 border border-emerald-500/40{% else %}bg-brand-dark text-brand-accent border border-gray-800{% endif %}">
+                            {% if l.progress_status == 'completed' %}✓{% else %}{{ loop.index }}{% endif %}
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm text-white group-hover:text-brand-accent transition-colors">{{ l.title }}</h3>
+                            <div class="flex gap-2 mt-1">
+                                <span class="text-[9px] bg-brand-dark border border-gray-800 text-brand-accent px-1.5 py-0.5 rounded">الحصة {{ l.order_index }}</span>
+                                {% if l.is_offline_available %}
+                                <span class="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded flex items-center gap-0.5">⬇️ متاح بدون إنترنت</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/lesson/{{ l.lesson_id }}" class="bg-brand-dark hover:bg-brand-accent hover:text-black text-brand-accent border border-brand-accent/20 text-xs px-3 py-1.5 rounded-lg font-bold transition-all">
+                        ابدأ الآن
+                    </a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="bg-brand-navy border border-gray-800 rounded-2xl p-6 text-center text-gray-400 text-xs">
+                    ⚠️ لم يتم إضافة دروس في هذا الفرع بعد. يمكنك إضافتها بسهولة من لوحة التحكم!
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-brand-navy border-t border-gray-800 py-2.5 px-4 flex justify-around items-center z-50 shadow-2xl">
+        <a href="/" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">🏠</span>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </a>
+        <a href="/grades" class="flex flex-col items-center gap-1 text-brand-accent">
+            <span class="text-lg">📚</span>
+            <span class="text-[10px] font-bold">الصفوف</span>
+        </a>
+        <a href="/flashcards" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">💡</span>
+            <span class="text-[10px] font-bold">الكبسولة</span>
+        </a>
+        <a href="/glossary" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">📖</span>
+            <span class="text-[10px] font-bold">القاموس</span>
+        </a>
+    </nav>
+
+</body>
+</html>

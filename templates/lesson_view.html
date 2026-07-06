@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العرّاب - عرض الدرس</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Cairo', sans-serif; }</style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#000000',
+                            navy: '#14213D',
+                            teal: '#14213D',
+                            lightTeal: '#E5E5E5',
+                            accent: '#FCA311'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-dark text-gray-100 min-h-screen pb-20">
+
+    <header class="bg-brand-navy border-b border-gray-800 sticky top-0 z-50 px-4 py-3 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <a href="/" class="bg-brand-accent text-black p-2 rounded-xl font-extrabold text-lg shadow-md shadow-brand-accent/20">ع</a>
+            <div>
+                <h1 class="text-sm font-bold text-white truncate max-w-[200px]">{{ lesson.title }}</h1>
+                <p class="text-[10px] text-brand-accent">{{ lesson.branch_name }} • {{ lesson.grade_name }}</p>
+            </div>
+        </div>
+        <a href="javascript:history.back()" class="text-xs text-brand-accent hover:text-white transition-colors">← عودة</a>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 mt-6">
+        
+        <!-- Video Section -->
+        {% if lesson.video_url %}
+        <div class="bg-brand-navy border border-gray-800 rounded-2xl overflow-hidden shadow-xl mb-6">
+            <div class="p-3 border-b border-gray-800 flex justify-between items-center bg-brand-dark/40">
+                <span class="text-xs font-bold text-brand-accent">🎥 فيديو الشرح تفاعلي (موشن جرافيك)</span>
+                <span class="text-[10px] bg-brand-accent/20 text-brand-accent px-2 py-0.5 rounded">عالي الدقة</span>
+            </div>
+            <div class="aspect-video w-full">
+                <iframe class="w-full h-full" src="{{ lesson.video_url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Lesson Content Card -->
+        <div class="bg-brand-navy border border-gray-800 rounded-2xl p-5 shadow-xl mb-6">
+            <h2 class="text-md font-bold text-white mb-3 flex items-center gap-2">
+                <span>📖 الشرح المكتوب والملخص الذكي</span>
+            </h2>
+            <div class="text-sm text-gray-300 leading-relaxed space-y-4">
+                {{ lesson.content_text | replace('
+', '<br>') | safe }}
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        {% if questions %}
+        <div class="bg-brand-navy border border-gray-800 rounded-2xl p-5 shadow-xl mb-6">
+            <h2 class="text-md font-bold text-brand-accent mb-4 flex items-center gap-2">
+                <span>🎯 اختبر نفسك فوراً للتقييم الذاتي</span>
+            </h2>
+            
+            <div class="space-y-6">
+                {% for q in questions %}
+                <div class="bg-brand-dark p-4 rounded-xl border border-gray-800">
+                    <p class="text-xs font-bold text-brand-accent mb-2">السؤال {{ loop.index }}:</p>
+                    <p class="text-sm font-bold text-white mb-4">{{ q.question_text }}</p>
+                    
+                    <div class="space-y-2.5">
+                        <button onclick="checkAnswer(this, 'A', '{{ q.correct_option }}', '{{ q.explanation }}')" class="w-full text-right text-xs bg-brand-navy hover:bg-brand-accent/20 p-3 rounded-lg border border-gray-800 transition-all font-semibold flex justify-between items-center">
+                            <span>أ) {{ q.option_a }}</span>
+                            <span class="indicator hidden"></span>
+                        </button>
+                        <button onclick="checkAnswer(this, 'B', '{{ q.correct_option }}', '{{ q.explanation }}')" class="w-full text-right text-xs bg-brand-navy hover:bg-brand-accent/20 p-3 rounded-lg border border-gray-800 transition-all font-semibold flex justify-between items-center">
+                            <span>ب) {{ q.option_b }}</span>
+                            <span class="indicator hidden"></span>
+                        </button>
+                        {% if q.option_c %}
+                        <button onclick="checkAnswer(this, 'C', '{{ q.correct_option }}', '{{ q.explanation }}')" class="w-full text-right text-xs bg-brand-navy hover:bg-brand-accent/20 p-3 rounded-lg border border-gray-800 transition-all font-semibold flex justify-between items-center">
+                            <span>ج) {{ q.option_c }}</span>
+                            <span class="indicator hidden"></span>
+                        </button>
+                        {% endif %}
+                        {% if q.option_d %}
+                        <button onclick="checkAnswer(this, 'D', '{{ q.correct_option }}', '{{ q.explanation }}')" class="w-full text-right text-xs bg-brand-navy hover:bg-brand-accent/20 p-3 rounded-lg border border-gray-800 transition-all font-semibold flex justify-between items-center">
+                            <span>د) {{ q.option_d }}</span>
+                            <span class="indicator hidden"></span>
+                        </button>
+                        {% endif %}
+                    </div>
+
+                    <!-- Explanation Container -->
+                    <div class="explanation-box hidden mt-4 p-3 bg-brand-navy border border-brand-accent/20 rounded-lg text-xs text-brand-accent leading-relaxed">
+                        <strong>💡 التفسير النموذجي:</strong> {{ q.explanation }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Complete Lesson Button -->
+        <form action="/complete-lesson/{{ lesson.lesson_id }}" method="POST">
+            <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-black font-extrabold text-sm py-3.5 rounded-xl shadow-lg transition-all transform active:scale-95 mb-6">
+                ✅ تم فهم الشرح واجتياز الدرس بنجاح (+50 نقطة)
+            </button>
+        </form>
+
+    </main>
+
+    <script>
+        function checkAnswer(btn, chosen, correct, explanation) {
+            const parent = btn.closest('.bg-brand-dark');
+            const buttons = parent.querySelectorAll('button');
+            const expBox = parent.querySelector('.explanation-box');
+            
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.classList.remove('hover:bg-brand-accent/20');
+            });
+
+            if (chosen === correct) {
+                btn.classList.add('bg-emerald-500/20', 'border-emerald-500', 'text-emerald-400');
+                btn.querySelector('.indicator').innerText = '✓ صحيح';
+                btn.querySelector('.indicator').classList.remove('hidden');
+            } else {
+                btn.classList.add('bg-red-500/20', 'border-red-500', 'text-red-400');
+                btn.querySelector('.indicator').innerText = '✗ خطأ';
+                btn.querySelector('.indicator').classList.remove('hidden');
+                
+                buttons.forEach(b => {
+                    if (b.onclick.toString().includes("'" + correct + "'")) {
+                        b.classList.add('bg-emerald-500/10', 'border-emerald-500/50', 'text-emerald-400/80');
+                    }
+                });
+            }
+
+            expBox.classList.remove('hidden');
+        }
+    </script>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-brand-navy border-t border-gray-800 py-2.5 px-4 flex justify-around items-center z-50 shadow-2xl">
+        <a href="/" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">🏠</span>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </a>
+        <a href="/grades" class="flex flex-col items-center gap-1 text-brand-accent">
+            <span class="text-lg">📚</span>
+            <span class="text-[10px] font-bold">الصفوف</span>
+        </a>
+        <a href="/flashcards" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">💡</span>
+            <span class="text-[10px] font-bold">الكبسولة</span>
+        </a>
+        <a href="/glossary" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">📖</span>
+            <span class="text-[10px] font-bold">القاموس</span>
+        </a>
+    </nav>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العرّاب - الأقسام والتبويبات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Cairo', sans-serif; }</style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#000000',
+                            navy: '#14213D',
+                            teal: '#14213D',
+                            lightTeal: '#E5E5E5',
+                            accent: '#FCA311'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-dark text-gray-100 min-h-screen pb-20">
+
+    <header class="bg-brand-navy border-b border-gray-800 sticky top-0 z-50 px-4 py-3 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <a href="/" class="bg-brand-accent text-black p-2 rounded-xl font-extrabold text-lg shadow-md shadow-brand-accent/20">ع</a>
+            <div>
+                <h1 class="text-sm font-extrabold text-white">{{ grade.grade_name }}</h1>
+                <p class="text-[10px] text-brand-accent">اختر التبويب المطلوب</p>
+            </div>
+        </div>
+        <a href="/grades" class="text-xs text-brand-accent hover:text-white transition-colors">تغيير الصف</a>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 mt-6">
+        <div class="space-y-4">
+            {% for t in tabs %}
+            <a href="/grade/{{ grade.grade_id }}/tab/{{ t.tab_id }}" class="bg-brand-navy hover:border-brand-accent/50 border border-gray-800 rounded-2xl p-5 flex justify-between items-center transition-all group shadow-lg">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-brand-dark rounded-xl flex items-center justify-center text-brand-accent text-lg font-extrabold border border-gray-800">
+                        {% if t.tab_name == 'شرح' %}🎥
+                        {% elif t.tab_name == 'مراجعة' %}📝
+                        {% else %}🎯{% endif %}
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white group-hover:text-brand-accent transition-colors">{{ t.tab_name }}</h3>
+                        <p class="text-xs text-gray-400 mt-1">
+                            {% if t.tab_name == 'شرح' %}دروس وفيديوهات شرح كرتونية تفاعلية موشن جرافيك
+                            {% elif t.tab_name == 'مراجعة' %}كبسولات سريعة، مقارنات، وتلخيصات ذكية
+                            {% else %}بنك أسئلة شامل ومحاكات للامتحانات الوزارية الحقيقية{% endif %}
+                        </p>
+                    </div>
+                </div>
+                <span class="text-gray-500 group-hover:text-brand-accent transition-all text-xl">←</span>
+            </a>
+            {% endfor %}
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-brand-navy border-t border-gray-800 py-2.5 px-4 flex justify-around items-center z-50 shadow-2xl">
+        <a href="/" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">🏠</span>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </a>
+        <a href="/grades" class="flex flex-col items-center gap-1 text-brand-accent">
+            <span class="text-lg">📚</span>
+            <span class="text-[10px] font-bold">الصفوف</span>
+        </a>
+        <a href="/flashcards" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">💡</span>
+            <span class="text-[10px] font-bold">الكبسولة</span>
+        </a>
+        <a href="/glossary" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">📖</span>
+            <span class="text-[10px] font-bold">القاموس</span>
+        </a>
+    </nav>
+
+</body>
+</html>

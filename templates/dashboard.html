@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العرّاب - لوحة الإنجاز</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Cairo Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#000000',      /* Black background */
+                            navy: '#14213D',      /* Deep Blue */
+                            teal: '#14213D',      /* Using Navy as primary dark */
+                            lightTeal: '#E5E5E5', /* Grey for borders/text */
+                            accent: '#FCA311'     /* Gold/Orange */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-dark text-gray-100 min-h-screen pb-20">
+
+    <!-- Top App Bar -->
+    <header class="bg-brand-navy border-b border-gray-800 sticky top-0 z-50 px-4 py-3 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="bg-brand-accent text-black p-2 rounded-xl font-extrabold text-lg shadow-md shadow-brand-accent/20">ع</div>
+            <div>
+                <h1 class="text-lg font-extrabold text-brand-accent tracking-wide">العرّاب</h1>
+                <p class="text-xs text-gray-400">منصتك للتفوق في اللغة العربية</p>
+            </div>
+        </div>
+        <a href="/admin" class="bg-brand-navy hover:bg-brand-accent hover:text-black text-brand-accent border border-brand-accent/30 px-3 py-1.5 rounded-lg text-xs font-bold transition-all">
+            لوحة التحكم
+        </a>
+    </header>
+
+    <!-- App Container -->
+    <main class="max-w-md mx-auto px-4 mt-6">
+        
+        <!-- Countdown Widget -->
+        <div class="bg-gradient-to-br from-brand-navy to-brand-navy border border-brand-accent/20 rounded-2xl p-4 shadow-xl text-center relative overflow-hidden mb-6">
+            <div class="absolute -top-10 -left-10 w-24 h-24 bg-brand-accent/10 rounded-full blur-xl"></div>
+            <p class="text-xs font-semibold text-brand-accent uppercase tracking-wider mb-2">⏱️ الوقت المتبقي على امتحان اللغة العربية للثانوية العامة</p>
+            <div class="flex justify-center items-center space-x-3 space-x-reverse">
+                <div class="bg-brand-dark border border-gray-800 px-3 py-2 rounded-xl min-w-[60px]">
+                    <span class="text-xl font-black text-brand-accent block">332</span>
+                    <span class="text-[10px] text-gray-400 block">يوم</span>
+                </div>
+                <div class="text-brand-accent font-bold text-xl">:</div>
+                <div class="bg-brand-dark border border-gray-800 px-3 py-2 rounded-xl min-w-[60px]">
+                    <span class="text-xl font-black text-brand-accent block">14</span>
+                    <span class="text-[10px] text-gray-400 block">ساعة</span>
+                </div>
+                <div class="text-brand-accent font-bold text-xl">:</div>
+                <div class="bg-brand-dark border border-gray-800 px-3 py-2 rounded-xl min-w-[60px]">
+                    <span class="text-xl font-black text-brand-accent block">45</span>
+                    <span class="text-[10px] text-gray-400 block">دقيقة</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grade Selection (Level 1 Navigation) -->
+        <div class="mb-6">
+            <h2 class="text-md font-bold text-gray-300 mb-3 flex items-center gap-2">
+                <span>📚 المرحلة الدراسية والمنهج</span>
+            </h2>
+            <div class="grid grid-cols-1 gap-3">
+                <a href="/grade/1" class="bg-brand-navy hover:border-brand-accent/50 border border-gray-800 rounded-2xl p-4 flex justify-between items-center transition-all group shadow-md">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-brand-dark rounded-xl flex items-center justify-center text-brand-accent font-bold border border-gray-800">١</div>
+                        <div>
+                            <span class="font-bold text-white block group-hover:text-brand-accent transition-colors">الصف الأول الثانوي</span>
+                            <span class="text-xs text-gray-400 block mt-0.5">منهج متكامل + اختبارات وبطاقات مراجعة</span>
+                        </div>
+                    </div>
+                    <span class="text-gray-500 group-hover:text-brand-accent transition-colors">←</span>
+                </a>
+                <a href="/grade/2" class="bg-brand-navy hover:border-brand-accent/50 border border-gray-800 rounded-2xl p-4 flex justify-between items-center transition-all group shadow-md">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-brand-dark rounded-xl flex items-center justify-center text-brand-accent font-bold border border-gray-800">٢</div>
+                        <div>
+                            <span class="font-bold text-white block group-hover:text-brand-accent transition-colors">الصف الثاني الثانوي</span>
+                            <span class="text-xs text-gray-400 block mt-0.5">شرح تفاعلي وبكاء قواعد وإعراب كامل</span>
+                        </div>
+                    </div>
+                    <span class="text-gray-500 group-hover:text-brand-accent transition-colors">←</span>
+                </a>
+                <a href="/grade/3" class="bg-brand-navy hover:border-brand-accent border-2 rounded-2xl p-4 flex justify-between items-center transition-all group shadow-md relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-brand-accent text-black font-extrabold text-[9px] px-2 py-0.5 rounded-bl-lg">الأكثر نشاطاً</div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-brand-dark rounded-xl flex items-center justify-center text-brand-accent font-bold border border-gray-800">٣</div>
+                        <div>
+                            <span class="font-bold text-white block group-hover:text-brand-accent transition-colors">الصف الثالث الثانوي</span>
+                            <span class="text-xs text-gray-300 block mt-0.5">منهج الثانوية العامة والشهادة الكبرى</span>
+                        </div>
+                    </div>
+                    <span class="text-gray-500 group-hover:text-brand-accent transition-colors">←</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Progress/Achievement Tracker Dashboard -->
+        <div class="bg-brand-navy border border-gray-800 rounded-2xl p-4 mb-6 shadow-xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-sm font-bold text-gray-300">📊 لوحة الإنجاز ومستوى الحفظ</h3>
+                <span class="text-xs bg-brand-dark text-brand-accent border border-brand-accent/20 px-2.5 py-1 rounded-full font-bold">مستوى ممتاز</span>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <div class="flex justify-between text-xs mb-1.5">
+                        <span class="text-gray-400">فرع النحو وقواعد الإعراب</span>
+                        <span class="text-brand-accent font-bold">{{ progress }}%</span>
+                    </div>
+                    <div class="w-full bg-brand-dark rounded-full h-2">
+                        <div class="bg-brand-accent h-2 rounded-full transition-all duration-1000" style="width: {{ progress }}%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-xs mb-1.5">
+                        <span class="text-gray-400">البلاغة والأدب العربي</span>
+                        <span class="text-brand-accent font-bold">40%</span>
+                    </div>
+                    <div class="w-full bg-brand-dark rounded-full h-2">
+                        <div class="bg-brand-accent h-2 rounded-full" style="width: 40%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard (ملتقى الأوائل) -->
+        <div class="bg-brand-navy border border-gray-800 rounded-2xl p-4 mb-6 shadow-xl">
+            <h3 class="text-sm font-bold text-gray-300 mb-4 flex items-center gap-2">
+                <span>🏆 ملتقى الأوائل (متصدري الجمهورية)</span>
+            </h3>
+            <div class="space-y-2.5">
+                {% for row in leaderboard %}
+                <div class="flex items-center justify-between p-2 rounded-xl bg-brand-dark border border-gray-800">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 flex items-center justify-center font-bold text-xs rounded-full {% if loop.index == 1 %}bg-brand-accent text-black{% else %}bg-brand-navy text-white border border-gray-700{% endif %}">
+                            {{ loop.index }}
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold block text-white">{{ row.full_name }}</span>
+                            <span class="text-[10px] text-gray-400 block">{{ row.governorate }}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="text-xs font-extrabold text-brand-accent">{{ row.points }}</span>
+                        <span class="text-[10px] text-gray-400">نقطة</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Creative Corner (ركن الإبداع) -->
+        {% if poster %}
+        <div class="bg-gradient-to-tr from-brand-navy to-brand-navy border border-brand-accent/20 rounded-2xl p-4 mb-6 shadow-xl text-center">
+            <h3 class="text-sm font-bold text-gray-200 mb-3">🎨 ركن الإبداع للأقلام الشابة</h3>
+            <p class="text-xs text-brand-accent font-bold mb-1">بوستر الأسبوع الإبداعي</p>
+            <div class="bg-brand-dark rounded-xl p-3 border border-gray-800 text-right mb-3">
+                <h4 class="text-xs font-bold text-white mb-1">"{{ poster.title }}"</h4>
+                <p class="text-[11px] text-gray-300 leading-relaxed italic">"{{ poster.content }}"</p>
+                <div class="text-[10px] text-brand-accent mt-2 text-left font-bold">— الطالب: {{ poster.full_name }}</div>
+            </div>
+        </div>
+        {% endif %}
+
+    </main>
+
+    <!-- Bottom Navigation Bar (Tab Bar) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-brand-navy border-t border-gray-800 py-2.5 px-4 flex justify-around items-center z-50 shadow-2xl">
+        <a href="/" class="flex flex-col items-center gap-1 text-brand-accent">
+            <span class="text-lg">🏠</span>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </a>
+        <a href="/grades" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">📚</span>
+            <span class="text-[10px] font-bold">الصفوف</span>
+        </a>
+        <a href="/flashcards" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">💡</span>
+            <span class="text-[10px] font-bold">الكبسولة</span>
+        </a>
+        <a href="/glossary" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">📖</span>
+            <span class="text-[10px] font-bold">القاموس</span>
+        </a>
+    </nav>
+
+</body>
+</html>

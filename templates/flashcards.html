@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العرّاب - كبسولة التفوق</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Cairo', sans-serif; }</style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#000000',
+                            navy: '#14213D',
+                            teal: '#14213D',
+                            lightTeal: '#E5E5E5',
+                            accent: '#FCA311'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-dark text-gray-100 min-h-screen pb-20">
+
+    <header class="bg-brand-navy border-b border-gray-800 sticky top-0 z-50 px-4 py-3 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <a href="/" class="bg-brand-accent text-black p-2 rounded-xl font-extrabold text-lg shadow-md shadow-brand-accent/20">ع</a>
+            <div>
+                <h1 class="text-sm font-extrabold text-white">كبسولة التفوق</h1>
+                <p class="text-[10px] text-brand-accent">بطاقات المراجعة السريعة وتريكات الامتحان</p>
+            </div>
+        </div>
+        <a href="/" class="text-xs text-brand-accent hover:text-white transition-colors">الرئيسية</a>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 mt-6">
+        <h2 class="text-xs font-bold text-gray-400 mb-4 flex items-center gap-1">
+            <span>💡 اضغط على البطاقة لقلبها ومعرفة القاعدة النموذجية</span>
+        </h2>
+
+        <div class="space-y-6">
+            {% for card in cards %}
+            <div class="relative w-full h-48 cursor-pointer group perspective" onclick="flipCard(this)">
+                <div class="relative w-full h-full duration-500 transform style-preserve-3d card-inner">
+                    <!-- Front Side -->
+                    <div class="absolute inset-0 bg-brand-navy border border-gray-800 rounded-2xl p-5 flex flex-col justify-between backface-hidden shadow-xl">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs bg-brand-dark border border-gray-800 text-brand-accent px-2.5 py-1 rounded-full font-bold">فرع: {{ card.branch_name }}</span>
+                            <button onclick="toggleFav(event, {{ card.card_id }}, this)" class="text-lg focus:outline-none">
+                                <span class="fav-icon">{% if card.is_fav %}❤️{% else %}🤍{% endif %}</span>
+                            </button>
+                        </div>
+                        <h3 class="font-bold text-sm text-white leading-relaxed mt-2 text-right">{{ card.title }}</h3>
+                        <p class="text-xs text-gray-300 mt-2 leading-relaxed text-right">{{ card.front_content }}</p>
+                        <div class="text-[10px] text-brand-accent text-left font-bold">اضغط للاطلاع على السر 🔄</div>
+                    </div>
+                    
+                    <!-- Back Side (Flipped) -->
+                    <div class="absolute inset-0 bg-brand-accent border border-brand-accent/30 rounded-2xl p-5 flex flex-col justify-between backface-hidden my-rotate-y shadow-xl overflow-y-auto text-black">
+                        <div>
+                            <span class="text-xs bg-black text-brand-accent px-2.5 py-1 rounded-full font-bold">🔑 القاعدة والتريكة الذهبية</span>
+                        </div>
+                        <p class="text-xs text-black font-extrabold leading-relaxed mt-3 text-right whitespace-pre-line">{{ card.back_content }}</p>
+                        <div class="text-[10px] text-black text-left font-black mt-2">انقر للعودة للواجهة 🔄</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <style>
+        .perspective {
+            perspective: 1000px;
+        }
+        .style-preserve-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .my-rotate-y {
+            transform: rotateY(180deg);
+        }
+        .flipped {
+            transform: rotateY(180deg);
+        }
+    </style>
+
+    <script>
+        function flipCard(cardContainer) {
+            const inner = cardContainer.querySelector('.card-inner');
+            inner.classList.toggle('flipped');
+        }
+
+        function toggleFav(event, cardId, btn) {
+            event.stopPropagation();
+            fetch('/flashcard/toggle-fav/' + cardId, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const icon = btn.querySelector('.fav-icon');
+                        icon.innerText = icon.innerText === '❤️' ? '🤍' : '❤️';
+                    }
+                });
+        }
+    </script>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-brand-navy border-t border-gray-800 py-2.5 px-4 flex justify-around items-center z-50 shadow-2xl">
+        <a href="/" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">🏠</span>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </a>
+        <a href="/grades" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">📚</span>
+            <span class="text-[10px] font-bold">الصفوف</span>
+        </a>
+        <a href="/flashcards" class="flex flex-col items-center gap-1 text-brand-accent">
+            <span class="text-lg">💡</span>
+            <span class="text-[10px] font-bold">الكبسولة</span>
+        </a>
+        <a href="/glossary" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-accent transition-colors">
+            <span class="text-lg">📖</span>
+            <span class="text-[10px] font-bold">القاموس</span>
+        </a>
+    </nav>
+
+</body>
+</html>
